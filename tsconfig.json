@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "allowJs": true,
+      "downlevelIteration": true,
+      "jsx": "react",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "lib": ["dom", "es5", "es2015.promise", "es2015.collection" ],
+      "importHelpers": true,
+    },
+    "include": [
+        "script.tsx",
+        "node_modules/react-contexify/src/utils/contextMenu.ts"
+    ]
+  }

@@ -1,0 +1,31 @@
+<!doctype html>
+
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'/>
+        <title>game</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" media="none" onload="if(media!='all')media='all'"/>
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body class="body">
+        <div class="wrapper">
+            <!-- The root React component is mounted in this div. Don't remove it. -->
+            <div id="game-container"></div>
+        </div>
+        <!-- import external libs -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.10.2/umd/react.development.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.10.2/umd/react-dom.development.js"></script>
+        <script src="react-cache.production.min.js"></script>
+        <!-- polyfill some things for IE -->
+        <script src="polyfills.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script> 
+        <!-- bring in the core game code after the overrides -->
+        <script src="core_script_compiled.js"></script>
+    </body>
+
+</html>
