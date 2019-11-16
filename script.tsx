@@ -6,7 +6,7 @@ import DocumentTitle from 'react-document-title';
 import shortid from 'shortid';
 import { saveAs } from 'file-saver';
 
-import { Scene, SceneItem, useForceUpdate, DeltaType, createStockTextItem, FullscreenCartoonLoader } from './types';
+import { Scene, SceneItem, useForceUpdate, DeltaType, FullscreenCartoonLoader } from './types';
 let supportsStorage = true;
 if(window.localStorage == undefined || window.localStorage == null)
     supportsStorage = false;
@@ -105,6 +105,7 @@ function App(props) {
     const [ isNameValid, setNameValid ] = React.useState(true);
     const [ isLoadingScene, setLoadingScene ] = React.useState(false);
     const [ hasWarnedStorage, setHasWarnedStorage ] = React.useState(supportsStorage);
+    const [ hasShownInstructions, setShownInstructions ] = React.useState(false);
     const sceneNameInput = React.useRef<HTMLInputElement>(null);
     const forceUpdate = useForceUpdate();
     const onSceneUpdate = (scene) => {
@@ -212,7 +213,7 @@ function App(props) {
     };
     if(currentSceneIdx == -1)
         return <DocumentTitle title="Cartoon Constructor">
-            <>
+            <Suspense fallback={<FullscreenCartoonLoader/>}>
                 <div className="hugeflex-center" style={{justifyContent: 'flex-start'}}>
                     <h1>Cartoon Constructor</h1>
                     <h2>Choose a scene:</h2>
@@ -248,33 +249,38 @@ function App(props) {
                     </label>
                     
                 </div>
-                <Modal isOpen={indexToDelete != -1} className="rm-content">
-                    <div className="rm-padding">
-                        <h2>Are you sure you want to delete {indexToDelete != -1 ? scenes[indexToDelete].name : "no-name"}?</h2>
-                        <p></p>
-                        <button className="scene-card-button hoverable-button" onClick={doDeleteScene}>Yes</button>&nbsp;<button className="scene-card-button hoverable-button"
-                            onClick={() => setIndexToDelete(-1)}>No</button>
-                    </div>
+                <Modal isOpen={indexToDelete != -1}>
+                    <h2>Are you sure you want to delete {indexToDelete != -1 ? scenes[indexToDelete].name : "no-name"}?</h2>
+                    <p></p>
+                    <button className="scene-card-button hoverable-button" onClick={doDeleteScene}>Yes</button>&nbsp;<button className="scene-card-button hoverable-button"
+                        onClick={() => setIndexToDelete(-1)}>No</button>
                 </Modal>
-                <Modal isOpen={nameChangingIndex != -1} className="rm-content">
-                    <div className="rm-padding">
-                        <h2>Enter a new name for the scene.</h2>
+                <Modal isOpen={!hasShownInstructions}>
+                        <h2>Instructions</h2>
+                        Welcome to Cartoon Constructor!
                         <p></p>
-                        <input ref={sceneNameInput} type="text" onChange={onNameChange} defaultValue={nameChangingIndex != -1 ? scenes[nameChangingIndex].name : "no-name"}/>
-                        <button className="scene-card-button hoverable-button" onClick={doRenameScene} disabled={isNameValid ? null: true}>Rename scene</button>
-                    </div>
-                </Modal>
-                <Modal isOpen={!hasWarnedStorage} className="rm-content">
-                    <div className="rm-padding">
-                        <h2>Warning</h2>
-                        Your browser does not support web storage. Cartoon Constructor will be unable
-                        to save your cartoon in the browser. You will have to manually save the cartoon file to your
-                        device from the scene selection page.
+                        You should choose "Default Scene" to get started. Each page of the cartoon (or block of the comic) should be created with
+                        a new scene. To create or delete scenes, hit the <i className="fas fa-chevron-up"></i> icon to return to the main menu.
                         <p></p>
-                        <button className="scene-card-button hoverable-button" onClick={() => setHasWarnedStorage(true)}>OK</button>
-                    </div>
+                        If you just need to go to the previous or next scene, you can use the arrows directly on the scene.
+                        <p></p>
+                        <button className="scene-card-button hoverable-button" onClick={() => setShownInstructions(true)}>OK</button>
                 </Modal>
-            </>
+                <Modal isOpen={nameChangingIndex != -1}>
+                    <h2>Enter a new name for the scene.</h2>
+                    <p></p>
+                    <input ref={sceneNameInput} type="text" onChange={onNameChange} defaultValue={nameChangingIndex != -1 ? scenes[nameChangingIndex].name : "no-name"}/>
+                    <button className="scene-card-button hoverable-button" onClick={doRenameScene} disabled={isNameValid ? null: true}>Rename scene</button>
+                </Modal>
+                <Modal isOpen={hasShownInstructions && !hasWarnedStorage}>
+                    <h2>Warning</h2>
+                    Your browser does not support web storage. Cartoon Constructor will be unable
+                    to save your cartoon in the browser. You will have to manually save the cartoon file to your
+                    device from the scene selection page.
+                    <p></p>
+                    <button className="scene-card-button hoverable-button" onClick={() => setHasWarnedStorage(true)}>OK</button>
+                </Modal>
+            </Suspense>
         </DocumentTitle>;
     else
         return <DocumentTitle title={"Cartoon Constructor - " + (scenes[currentSceneIdx].name)}>

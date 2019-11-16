@@ -12,16 +12,35 @@ function genRepeatedArray<T>(templateFn: (i: number) => T, num: number, start: n
 const availableImages: { [ categoryName: string]: string[]; } = {
     "Speech bubbles": genRepeatedArray(i => `images/png/bubble${i}.png`, 9),
     "Birds": genRepeatedArray(i => `images/png/bird${i}.png`, 8),
-    "People": genRepeatedArray(i => `images/png/boy${i}.png`, 4).concat([ 'images/png/girl.png', 'images/png/father.png']),
+    "People": genRepeatedArray(i => `images/png/boy${i}.png`, 4).concat(genRepeatedArray(i => `images/png/girl${i}.png`, 4), [ 'images/png/mother.png', 'images/png/father.png']),
     "Animals": [
         'images/png/cat.png',
         'images/png/dog.png',
-        'images/png/dog2.png'
+        'images/png/dog2.png',
+        'images/png/sheep.png',
+        'images/png/lion.png',
+        'images/png/tiger.png'
     ],
-    "City": [
+    "Books": [
+        'images/png/book.png',
+        'images/png/book2.png',
+        'images/png/book3.png',
+    ],
+    "Food": [
+        'images/png/hotdog.png',
+        'images/png/icecream.png',
+        'images/png/muffin.png',
+        'images/png/pie.png'
+    ],
+    "Urban": [
         'images/png/city.jpg',
         'images/png/city2.jpg',
         'images/png/city3.jpg'
+    ],
+    "Natural": [
+        'images/png/bkgd.png',
+        'images/png/background.jpg',
+        'images/png/background2.jpg'
     ]
 };
 const availableImagesKeys = Object.keys(availableImages);
@@ -68,7 +87,7 @@ export default function ImageSelector(props) {
         setImageIndex(0);
     }, [ categoryIndex ]);
     const keyName = availableImagesKeys[categoryIndex];
-    return <div className="rm-padding">
+    return <>
         <span className="image-selector-category">
             <Button type="chevron-left" disabled={categoryIndex > 0 ? null : true} onClick={() => setCategoryIndex(categoryIndex - 1)}/>
             <span style={{fontSize: '1.5em', fontWeight: 'bold'}}>{keyName}</span>
@@ -88,5 +107,5 @@ export default function ImageSelector(props) {
         </span>
         <p></p>
         <button className="scene-card-button hoverable-button" onClick={props.onCancel}>Cancel</button>
-    </div>;
+    </>;
 }

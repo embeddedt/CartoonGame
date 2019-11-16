@@ -465,18 +465,16 @@ function CartoonScene(props: CartoonSceneProps) {
                     </div>}
                 </div>
             </div>
-            <Modal isOpen={isAddingImage} className="rm-content">
+            <Modal isOpen={isAddingImage}>
                 <ImageSelector setCategoryIndex={setCategoryIndex} categoryIndex={categoryIndex}
                     setImageIndex={setImageIndex} currentImageIndex={currentImageIndex}
                     onImageSelected={handleImageSelect} onCancel={() => setAddingImage(false)}/>
             </Modal>
-            <Modal isOpen={showDownloadWindow} className="rm-content">
-                <div className="rm-padding">
-                    {lastScreenshotTaken != null ? <a href={lastScreenshotTaken} target="_blank" onClick={doDownloadScreenshot} onContextMenu={(e) => e.preventDefault()}
-                        download="cartoon.png">Download your cartoon here.</a> :
-                    "Your browser failed to take a screenshot for some reason. You'll have to use the screenshot tool provided on your device."}
-                    <p style={{marginBottom: '0'}}><button className="scene-card-button hoverable-button" onClick={() => setShowingDownloadWindow(false)}>{lastScreenshotTaken != null ? "Cancel" : "OK"}</button></p>
-                </div>
+            <Modal isOpen={showDownloadWindow}>
+                {lastScreenshotTaken != null ? <a href={lastScreenshotTaken} target="_blank" onClick={doDownloadScreenshot} onContextMenu={(e) => e.preventDefault()}
+                    download="cartoon.png">Download your cartoon here.</a> :
+                "Your browser failed to take a screenshot for some reason. You'll have to use the screenshot tool provided on your device."}
+                <p style={{marginBottom: '0'}}><button className="scene-card-button hoverable-button" onClick={() => setShowingDownloadWindow(false)}>{lastScreenshotTaken != null ? "Cancel" : "OK"}</button></p>
             </Modal>
         </>;
     else

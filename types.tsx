@@ -25,7 +25,7 @@ export function CartoonLoader(props) {
 }
 
 export function FullscreenCartoonLoader(props) {
-    return <div className="hugeflex-center"><CartoonLoader {...props}/></div>;
+    return <div className="fullscreen hugeflex-center"><CartoonLoader {...props}/></div>;
 }
 export type DeltaType = number|'menu';
 
