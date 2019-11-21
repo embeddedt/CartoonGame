@@ -21,10 +21,14 @@ const availableImages: { [ categoryName: string]: string[]; } = {
         'images/png/lion.png',
         'images/png/tiger.png'
     ],
-    "Books": [
-        'images/png/book.png',
+    "Props&Toys": [
+        'images/png/soccer.png',
         'images/png/book2.png',
-        'images/png/book3.png',
+        'images/png/backpack.png',
+        'images/png/football.png',
+        'images/png/skateboard.png',
+        'images/png/bike.png',
+        'images/png/bike2.png'
     ],
     "Food": [
         'images/png/hotdog.png',
